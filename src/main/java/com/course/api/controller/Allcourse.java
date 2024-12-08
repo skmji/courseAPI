@@ -1,17 +1,46 @@
-package com.course.api.myapi;
+package com.course.api.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.course.api.Entities.Course;
+import com.course.api.services.CourseServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/course")
+@CrossOrigin(origins = "http://localhost:3000")
 public class Allcourse {
+    @Autowired
+   private CourseServices courseServices;
 
-    @GetMapping("/allcourse")
+    @GetMapping
+    public List<Course> getAllCourse(){
 
-    public String getAllCourse(){
-        return "all course";
+        return courseServices.getAllCourse();
     }
+
+    @GetMapping("/{id}")
+    public Course getCourseById( @PathVariable int id){
+        return courseServices.getCourseById(id);
+    }
+    @PostMapping
+    public void  addCourse(@RequestBody Course course){
+        courseServices.addCourse(course);
+        System.out.println(course);
+      //  System.out.println(course.getAuthor());
+
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable int id){
+     courseServices.deleteCourse(id);
+
+    }
+
+    @PutMapping("{id}")
+    public void updateCourse( @PathVariable  int id,@RequestBody Course course){
+        courseServices.updateCourse(id,course);
+    }
+
 }

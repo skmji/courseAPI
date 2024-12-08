@@ -1,4 +1,8 @@
 package com.course.api.repo;
 
-public interface StudentRepo {
+import com.course.api.Entities.Student;
+import org.springframework.data.repository.CrudRepository;
+
+public interface StudentRepo extends CrudRepository<Student, Integer> {
+
 }
